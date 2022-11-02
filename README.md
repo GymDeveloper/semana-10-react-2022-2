@@ -1,70 +1,205 @@
-# Getting Started with Create React App
+# ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Es una biblioteca de JavaScript para construir interfaces de usuario.
 
-## Available Scripts
+## Como crear un proyecto
 
-In the project directory, you can run:
+Para crear un proyecto de ReactJS, se debe ejecutar el siguiente comando:
 
-### `npm start`
+```bash
+npx create-react-app nombre-del-proyecto
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+cd nombre-del-proyecto
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm start
+```
 
-### `npm test`
+## Clonando proyecto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Cuando se clona un proyecto de ReactJS, se debe ejecutar el siguiente comando:
 
-### `npm run build`
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Recordemoes que `npm install` va a instalar todas las dependencias que se encuentran en el archivo `package.json`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Luego de instalar todo recien vamos a poder usar el comando `npm start` para ejecutar el proyecto.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Reglas
 
-### `npm run eject`
+- Todo componente debe ser una función.
+- Todo compomente debe empezar con *mayuscula*.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```js
+// Usando function
+function MyCard() {
+  return <div>My Card</div>
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+// Usando arrow function
+const MyCard = () => {
+  return <div>My Card</div>
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Todo componente debe retornar un solo elemento padre.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+function MyCard() {
+  return (
+    <div>
+      <h1>Titulo</h1>
+      <p>Parrafo</p>
+      <div>
+        <p>Parrafo hijo</p>
+        <div>
+          <p>Parrafo hijo 2</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
 
-## Learn More
+- Nota: Dentro de mi componente puede mas funciones y esas ya no llevan mayuscula.
+- Eventos: Los nombre de los eventos en React son camelCase.
+  - onclick -> onClick
+  - onchange -> onChange
+  - onsubmit -> onSubmit
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```js
+function MyCard() {
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  function mostrarMensaje() {
+    console.log('Hola mundo');
+  }
 
-### Code Splitting
+  return (
+    <div>
+      <h1>Titulo</h1>
+      <button onClick={mostrarMensaje}>Mostrar mensaje</button>
+    </div>
+  );
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## useState
 
-### Analyzing the Bundle Size
+En react para poder almacenar un valor en un variable
+usamos un hook llamando useState
+useState es una funcion de react la cual nos permite poder
+manejar el estado de una variable
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Como se usa useState
+- *Siempre los import de react van en la primera linea*
 
-### Making a Progressive Web App
+```js
+import { useState } from "react";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+function App() {
+  // useState nos retorna un arreglo con dos valores
+  // el primer valor es el valor de la variable ("Juan")
+  // el segundo valor es una funcion que nos permite cambiar el valor de la variable
+  const [nombre, setNombre] = useState("Juan");
+  
+  // nombre = "Pepe"; // Esto no se puede hacer
+  // setNombre("Pepe"); // Esto si se puede hacer
 
-### Advanced Configuration
+  // Si queremos cambiar el valor de la variable nombre
+  // tenemos que llamar a la funcion setNombre
+  return (
+    <div>
+      <p>Nombre {nombre}</p>
+      <button onClick={() => setNombre("Pepe")}>Cambiar nombre</button>
+    </div>
+  )
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## onChange para Inputs
 
-### Deployment
+- En react para poder manejar el valor de un input usams el evento onChange
+este va a permitir captar cada vez que el usuario escriba en el input
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+function App() {
+  const [inputText, setInputText] = useState("");
 
-### `npm run build` fails to minify
+  function handleInputChange(event) {
+    // cambiar el valor de la variable inputText
+    // si queremos obtener lo que el usuario escribio
+    // usamos event.target.value
+    setInputText(event.target.value);
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  return (
+    <div>
+      <p>Nombre {nombre}</p>
+      <input type="text" onChange={handleInputChange} />
+    </div>
+  )
+  
+}
+```
+
+## Sweet Alert
+
+Es una libreria que nos permite mostrar alertas en nuestra aplicacion
+
+### Instalacion
+
+```bash
+npm install sweetalert
+```
+
+### Como se usa
+
+```js
+import Swal from "sweetalert2";
+
+Swal.fire("Titulo", "Mensaje", "Tipo");
+```
+
+Tenemos 5 tipos de alertas
+
+- success
+- error
+- warning
+- info
+- question
+
+## Limpiando proyecto
+
+Cuando usamos el comando `npx create-react-app nombre-del-proyecto` se crean archivo inncesarios
+
+Lista de ellos.
+
+1. setupTests.js ✅
+2. reportWebVitals.js ✅
+3. logo.svg ✅
+4. App.test.js ✅
+5. public/logo192.png ✅
+6. public/logo512.png ✅
+
+Ahora tenemos que tener cuidado luego de borrar estos archivos porque surgiran errores.
+
+Para arreglar el error de webVitas solo debemos borrar la linea de import y el uso de la funcion en el archivo `index.js`
+
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
